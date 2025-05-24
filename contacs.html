@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .burger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #1d1e25 0%, #564c60 100%);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                gap: 40px;
+                backdrop-filter: blur(20px);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-item a {
+                color: white;
+                font-size: 22px;
+                padding: 15px 25px;
+                border: 2px solid transparent;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                min-width: 200px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+
+            .nav-item a:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: white;
+                transform: scale(1.05);
+            }
+
+            .header {
+                padding: 12px 0;
+            }
+
+            main {
+                padding-top: 80px;
+            }
+
+            .contact-cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .form-container {
+                padding: 25px 20px;
+                margin: 0 10px;
+            }
+
+            .input-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100%;
+                padding: 0 10px;
+            }
+
+            .form-container {
+                padding: 20px 15px;
+                margin: 0 5px;
+            }
+
+            .contact-card {
+                padding: 25px 15px;
+            }
+
+            .h2cha {
+                font-size: clamp(24px, 8vw, 32px);
+                margin-bottom: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Декоративные фигуры -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Хедер с навигацией -->
+    <header class="header">
+        <nav class="nav-container container">
+            <div class="logo">Logo</div>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="./index.html">Главная</a></li>
+                <li class="nav-item"><a href="#about">О нас</a></li>
+                <li class="nav-item"><a href="#services">Услуги</a></li>
+                <li class="nav-item"><a href="#portfolio">Портфолио</a></li>
+                <li class="nav-item"><a href="./contact.html" class="active">Boglanish</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Секция контактов -->
+        <section class="container">
+            <div>
+                <h2 class="h2cha">Boglanish</h2>
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <div class="icon">📧</div>
+                        <h3>E-pochta</h3>
+                        <p><a href="mailto:dapergnat@gmail.com">dapergnat@gmail.com</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon">📱</div>
+                        <h3>Telefon</h3>
+                        <p><a href="tel:+998901234567">+998 90 123 45 67</a></p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon">📍</div>
+                        <h3>Manzil</h3>
+                        <p>Toshkent shahri, Yunusobod tumani</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="icon">🌐</div>
+                        <h3>Ijtimoiy tarmoqlar</h3>
+                        <p><a href="#" target="_blank">Telegram, Instagram</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Секция формы -->
+        <section class="container">
+            <div>
+                <h2 class="h2cha">So'rov Yuborish</h2>
+                <div class="form-container">
+                    <form id="contactForm">
+                        <label for="ism">Ismingiz*</label>
+                        <input type="text" id="ism" name="ism" placeholder="Falonchiyev Falonchi" required>
+
+                        <label for="manzil">Aloqa ma'lumotlaringiz*</label>
+                        <div class="input-group">
+                            <input type="email" id="manzil" name="manzil" placeholder="misol@gmail.com" required>
+                            <select name="type" id="contactType">
+                                <option value="email">E-pochta</option>
+                                <option value="phone">Telefon</option>
+                            </select>
+                        </div>
+
+                        <label for="izoh">Izohingiz*</label>
+                        <textarea id="izoh" name="izoh" placeholder="O'z izohingizni yozing..." required></textarea>
+
+                        <button type="submit">Yuborish</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Burger menu functionality
+        const burger = document.getElementById('burger');
+        const navMenu = document.getElementById('navMenu');
+
+        burger.addEventListener('click', () => {
+            burger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-item a').forEach(link => {
+            link.addEventListener('click', () => {
+                burger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('ism');
+            const contact = formData.get('manzil');
+            const type = formData.get('type');
+            const message = formData.get('izoh');
+
+            // Simple validation
+            if (!name || !contact || !message) {
+                alert('Iltimos, barcha majburiy maydonlarni to\'ldiring!');
+                return;
+            }
+
+            // Simulate form submission
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.textContent;
+
+            button.textContent = 'Yuborilmoqda...';
+            button.disabled = true;
+
+            setTimeout(() => {
+                alert('Xabaringiz muvaffaqiyatli yuborildi! Tez orada javob beramiz.');
+                this.reset();
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+        });
+
+        // Dynamic input type change
+        document.getElementById('contactType').addEventListener('change', function () {
+            const input = document.getElementById('manzil');
+            if (this.value === 'phone') {
+                input.type = 'tel';
+                input.placeholder = '+998 90 123 45 67';
+            } else {
+                input.type = 'email';
+                input.placeholder = 'misol@gmail.com';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О нас - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1d1e25 0%, #564c60 100%);
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* HEADER - тот же адаптивный стиль */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: clamp(20px, 4vw, 24px);
+            font-weight: bold;
+            color: #877f7f;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #fff;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 8px;
+            position: relative;
+            z-index: 1001;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .burger:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .burger span {
+            width: 25px;
+            height: 3px;
+            background: #fff;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            transform-origin: center;
+            border-radius: 2px;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #887d7d;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 16px;
+        }
+
+        .nav-item a:hover,
+        .nav-item a.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ОСНОВНОЙ КОНТЕНТ */
+        main {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .main-text {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: clamp(40px, 6vh, 80px) 0;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .h2cha,
+        .h2cha1 {
+            font-size: clamp(24px, 4.5vw, 36px);
+            margin: clamp(40px, 6vh, 60px) 0 clamp(20px, 3vh, 30px) 0;
+            position: relative;
+            display: inline-block;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .h2cha::after,
+        .h2cha1::after {
+            content: "";
+            display: block;
+            width: clamp(50px, 8vw, 70px);
+            height: clamp(6px, 1vw, 8px);
+            background: linear-gradient(135deg, #665e6e 0%, #202127 100%);
+            margin-top: 8px;
+            border-radius: 20px;
+            animation: slideIn 0.8s ease 0.3s both;
+        }
+
+        .main-text p {
+            font-size: clamp(14px, 2.2vw, 18px);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            text-align: justify;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .butoncha {
+            padding: clamp(12px, 2vw, 15px) clamp(20px, 4vw, 30px);
+            min-width: 150px;
+            border-radius: 10px;
+            color: white;
+            background: linear-gradient(135deg, #564c60 0%, #1d1e25 100%);
+            border: none;
+            font-size: clamp(14px, 2vw, 16px);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .butoncha:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #665e6e 0%, #202127 100%);
+        }
+
+        /* КАРТОЧКИ НАВЫКОВ - Полностью адаптивные */
+        .kartochkalar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            margin-top: clamp(20px, 4vh, 40px);
+            padding: 0 10px;
+        }
+
+        .kartochka {
+            background: linear-gradient(135deg, #292828 0%, #3a3a3a 100%);
+            border-radius: 15px;
+            padding: clamp(20px, 4vw, 30px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 140px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .kartochka::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .kartochka:hover::before {
+            left: 100%;
+        }
+
+        .kartochka:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .htmlrasm {
+            width: clamp(40px, 8vw, 60px);
+            height: clamp(40px, 8vw, 60px);
+            transition: all 0.3s ease;
+            filter: brightness(0.8);
+        }
+
+        .text-hover {
+            margin-top: 10px;
+            font-size: clamp(12px, 2vw, 14px);
+            font-weight: 600;
+            color: #ccc;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .kartochka:hover .htmlrasm {
+            transform: scale(1.1);
+            filter: brightness(1);
+        }
+
+        .kartochka:hover .text-hover {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* SEO КАРТОЧКИ - Адаптивные */
+        .seo-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            margin-top: clamp(20px, 4vh, 40px);
+        }
+
+        .seo-card {
+            background: linear-gradient(135deg, #333 0%, #404040 100%);
+            padding: clamp(20px, 4vw, 25px);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .seo-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .seo-card img {
+            width: clamp(50px, 10vw, 70px);
+            height: clamp(50px, 10vw, 70px);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .seo-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .seo-card h4 {
+            font-size: clamp(16px, 2.5vw, 20px);
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .seo-card p {
+            font-size: clamp(13px, 2vw, 15px);
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        /* СПОНСОРЫ - Адаптивные */
+        .sponsor {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: clamp(15px, 3vw, 25px);
+            margin-top: clamp(20px, 4vh, 40px);
+            margin-bottom: clamp(40px, 6vh, 80px);
+        }
+
+        .sponsori {
+            background: linear-gradient(135deg, #333 0%, #404040 100%);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 120px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .sponsori:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .sponsori img {
+            max-width: 100%;
+            max-height: 80px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .sponsori:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: clamp(40px, 8vw, 80px);
+            height: clamp(40px, 8vw, 80px);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: clamp(60px, 12vw, 120px);
+            height: clamp(60px, 12vw, 120px);
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: clamp(30px, 6vw, 60px);
+            height: clamp(30px, 6vw, 60px);
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        /* АНИМАЦИИ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+
+            to {
+                width: clamp(50px, 8vw, 70px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+        }
+
+        /* МЕДИА ЗАПРОСЫ */
+
+        /* Планшеты */
+        @media (max-width: 768px) {
+            .burger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #1d1e25 0%, #564c60 100%);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                gap: 40px;
+                backdrop-filter: blur(20px);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-item a {
+                color: white;
+                font-size: 22px;
+                padding: 15px 25px;
+                border: 2px solid transparent;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border-radius: 15px;
+                min-width: 200px;
+                text-align: center;
+                transition: all 0.3s ease;
+            }
+
+            .nav-item a:hover {
+                background: rgba(255, 255, 255, 0.2);
+                border-color: white;
+                transform: scale(1.05);
+            }
+
+            .kartochkalar {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 15px;
+            }
+
+            .seo-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .seo-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .sponsor {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Мобильные устройства */
+        @media (max-width: 480px) {
+            main {
+                padding-top: 80px;
+            }
+
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+
+            .main-text {
+                padding: 30px 0;
+            }
+
+            .kartochkalar {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .kartochka {
+                min-height: 120px;
+                padding: 15px;
+            }
+
+            .seo-cards {
+                gap: 15px;
+            }
+
+            .sponsor {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .sponsori {
+                min-height: 100px;
+                padding: 15px;
+            }
+        }
+
+        /* Очень маленькие экраны */
+        @media (max-width: 320px) {
+            .kartochkalar {
+                grid-template-columns: 1fr;
+            }
+
+            .main-text p {
+                text-align: left;
+                font-size: 14px;
+            }
+        }
+
+        /* Улучшения для больших экранов */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1400px;
+            }
+
+            .kartochkalar {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .seo-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Touch устройства */
+        @media (hover: none) and (pointer: coarse) {
+            .kartochka:hover {
+                transform: none;
+            }
+
+            .kartochka:active {
+                transform: scale(0.95);
+            }
+
+            .seo-card:hover {
+                transform: none;
+            }
+
+            .seo-card:active {
+                transform: scale(0.98);
+            }
+        }
+
+        /* Анимации только для устройств, которые их поддерживают */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Декоративные фигуры -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Хедер с навигацией -->
+    <header class="header">
+        <nav class="nav-container container">
+            <div class="logo">Logo</div>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="./index.html">Главная</a></li>
+                <li class="nav-item"><a href="./about.html" class="active">Haqimda</a></li>
+                <li class="nav-item"><a href="./projects.html">Loyihalar</a></li>
+                <li class="nav-item"><a href="#portfolio">Портфолио</a></li>
+                <li class="nav-item"><a href="./contacs.html">Boglanish</a></li>
+            </ul>
+
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container">
+            <div class="main-text">
+                <h2 class="h2cha">Men Haqimda</h2>
+                <p>Men Xudoyberdiyev Azizbekman veb dasturchiman. Yoshim 15 da,
+                    Qiziqarli, ko'p funksionallika ega bo'lgan va kuchli dizaynga ega bo'lgan dasturlar
+                    yaratishga qiziqaman.</p>
+                <p>
+                    Mening vazifam veb saytni foydalanuvchilarga qulay, sayt dizayni foydalanuvchilarga jalb qiluvchi
+                    lekin ayni paytda tezkor bo'lishini taminlashdir va saytni moslashuvchan kodlar bilan yaratishdir!
+                    Mening maqsadim veb sayt foydalanuvchilariga barcha qismlarini intuitiv va qulay bo'lishga harakat
+                    qilishga qaratilgan. Agar sizga men yaratgan loyihalarim qiziq bo'lsa Loyihalar sahifasiga tashrif
+                    buyurishingiz mumkin :)
+                </p>
+                <a href="./contacs.html"><button class="butoncha">Boglanish</button></a>
+            </div>
+
+            <div>
+                <h2 class="h2cha">Asbob-Uskunalar</h2>
+                <div class="kartochkalar">
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./html-5 1 (1).svg" alt=""></div>
+                        <p class="text-hover">HTML</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./css 1 (1).svg" alt=""></div>
+                        <p class="text-hover">CSS</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./js 1 (1).svg" alt=""></div>
+                        <p class="text-hover">JAVASCRIPT</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./figma 1 (1).svg" alt=""></div>
+                        <p class="text-hover">FIGMA</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./react 1 (1).svg" alt=""></div>
+                        <p class="text-hover">REACT</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./tailwind 1 (1).svg" alt=""></div>
+                        <p class="text-hover">TAILWIND</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm"><img src="./swiper-logo 1 (1).svg" alt=""></div>
+                        <p class="text-hover">SWIPER JS</p>
+                    </div>
+                    <div class="kartochka">
+                        <div class="htmlrasm">🐙</div>
+                        <p class="text-hover">GITHUB</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2 class="h2cha1">Men Nimalar qila olaman</h2>
+                <div class="seo-cards">
+                    <div class="seo-card">
+                        <div><img src="./image wrapper (4).png" alt=""></div>
+                        <div>
+                            <h4>SEO</h4>
+                            <p>Qidiruv tizimining natijalarida sayt reytingini yaxshilash</p>
+                        </div>
+                    </div>
+                    <div class="seo-card">
+                        <div><img src="./image wrapper (5).png" alt=""></div>
+                        <div>
+                            <h4>Dizayn</h4>
+                            <p>Kuchli dizayn va kichik detallargacha e'tibor berish</p>
+                        </div>
+                    </div>
+                    <div class="seo-card">
+                        <div><img src="./image wrapper (6).png" alt=""></div>
+                        <div>
+                            <h4>Sifat</h4>
+                            <p>Yuqori darajada saytlarni sifatli ishlab chiqish</p>
+                        </div>
+                    </div>
+                    <div class="seo-card">
+                        <div><img src="./image wrapper (7).png" alt=""></div>
+                        <div>
+                            <h4>Tezlik</h4>
+                            <p>Qisqa muddat ichida tezkor sayt ishlab chiqish</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <h2 class="h2cha">Men O'qigan joyalar</h2>
+            <div class="sponsor">
+                <div class="sponsori">
+                    <div style="font-size: 24px;"><img
+                            src="https://media.licdn.com/dms/image/v2/C4D0BAQG5vC4WQ1usrA/company-logo_400_400/company-logo_400_400/0/1657626185445?e=2147483647&v=beta&t=W0rIYnoy49SM2fIlCNx622rdKt8pswOYmiGB5cpMBTA"
+                            alt=""></div>
+                </div>
+                <div class="sponsori">
+                    <div style="font-size: 24px;"></div>
+                </div>
+                <div class="sponsori">
+                    <div style="font-size: 24px;"></div>
+                </div>
+                <div class="sponsori">
+                    <div style="font-size: 24px;"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./script.js">
+
+    </script>
+</body>
+
+</html>

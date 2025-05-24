@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Портфолио - Проекты</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1d1e25 0%, #564c60 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 85%;
+            margin: 0 auto;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #877f7f;
+        }
+
+        .burger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .burger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .burger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .burger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-item a {
+            text-decoration: none;
+            color: #887d7d;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .h2cha {
+            margin-top: 90px;
+            font-size: 30px;
+        }
+
+        .h2cha::after {
+            content: "";
+            display: block;
+            width: 70px;
+            height: 8px;
+            background: linear-gradient(135deg, #665e6e 0%, #202127 100%);
+            margin-top: 5px;
+            border-radius: 20px;
+        }
+
+
+
+        @media (max-width: 768px) {
+            .burger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 100%;
+                height: 100vh;
+                background: linear-gradient(135deg, #1d1e25 0%, #564c60 100%);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                gap: 50px;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-item a {
+                color: white;
+                font-size: 24px;
+                padding: 15px 30px;
+                border: 2px solid transparent;
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 426px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                gap: 10px;
+            }
+
+            .filter-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    
+    <header class="header">
+        <nav class="nav-container container">
+            <div class="logo">Logo</div>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item"><a href="./index.html">Главная</a></li>
+                <li class="nav-item"><a href="./about.html">Haqimda</a></li>
+                <li class="nav-item"><a href="./projects.html">Loyihalr</a></li>
+                <li class="nav-item"><a href="./projects.html">Портфолио</a></li>
+                <li class="nav-item"><a href="./about.html">Boglanish</a></li>
+            </ul>
+
+            <div class="burger" id="burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="container">
+            <div>
+                <h2 class="h2cha">Loyihalar</h2>
+
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="web">Web</button>
+                    <button class="filter-btn" data-filter="mobile">Mobile</button>
+                    <button class="filter-btn" data-filter="desktop">Desktop</button>
+                </div>
+
+                <div class="projects-grid">
+                    <div class="project-card" data-category="web">
+                        <div class="project-image">🌐</div>
+                        <div class="project-content">
+                            <h3 class="project-title">E-commerce Platform</h3>
+                            <p class="project-description">Полнофункциональная платформа для интернет-торговли с
+                                системой оплаты и административной панелью.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">Node.js</span>
+                                <span class="tech-tag">MongoDB</span>
+                                <span class="tech-tag">Stripe</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link primary">Демо</a>
+                                <a href="#" class="project-link secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="mobile">
+                        <div class="project-image">📱</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Task Manager App</h3>
+                            <p class="project-description">Мобильное приложение для управления задачами с синхронизацией
+                                в облаке.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">React Native</span>
+                                <span class="tech-tag">Firebase</span>
+                                <span class="tech-tag">Redux</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link primary">App Store</a>
+                                <a href="#" class="project-link secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="web">
+                        <div class="project-image">🎨</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Portfolio Website</h3>
+                            <p class="project-description">Адаптивный сайт-портфолио с современным дизайном и
+                                анимациями.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">CSS3</span>
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">GSAP</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link primary">Просмотр</a>
+                                <a href="#" class="project-link secondary">Код</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="desktop">
+                        <div class="project-image"><img src="" alt=""></div>
+                        <div class="project-content">
+                            <h3 class="project-title">SOAT</h3>
+                            <p class="project-description">Sayt ichidagi sodda soat</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTml</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link primary">Yuklab olish</a>
+                                <a href="#" class="project-link secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="web">
+                        <div class="project-image">🚀</div>
+                        <div class="project-content">
+                            <h3 class="project-title">CRM System</h3>
+                            <p class="project-description">Система управления клиентскими отношениями с аналитикой и
+                                отчетами.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Vue.js</span>
+                                <span class="tech-tag">Laravel</span>
+                                <span class="tech-tag">MySQL</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link primary">Демо</a>
+                                <a href="#" class="project-link secondary">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-category="mobile">
+                        <div class="project-image">🎵</div>
+                        <div class="project-content">
+                            <h3 class="project-title">Music Player</h3>
+                            <p class="project-description">Современный музыкальный плеер с плейлистами и эквалайзером.
+                            </p>
+                            <div class="project-tech">
+                                <span class="tech-tag">HTML</span>
+                                <span class="tech-tag">CSS</span>
+                                <span class="tech-tag">JS</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link primary">Kod</a>
+                                <a href="#" class="project-link secondary">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="stats-section">
+                <h2 class="h2cha">statistika</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <div class="stat-label">Проектов завершено</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">0+</span>
+                        <div class="stat-label">Довольных клиентов</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1+</span>
+                        <div class="stat-label">tajriba</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5+</span>
+                        <div class="stat-label">Veb texnologiyalr</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./script.js">
+
+    </script>
+</body>
+
+</html>
